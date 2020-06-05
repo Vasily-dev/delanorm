@@ -45,10 +45,10 @@ $show_complete_tasks = rand(0, 1);
                         $projectname = ['Входящие', 'Учёба', 'Работа', 'Домашние дела', 'Авто'];
                         $tasksall = array(
                             $task = ['Задача', 'Дата выполнения', 'Категория', 'Выполнена'],
-                            $task = ['Собеседование в IT компании', '01.12.2019', 'Работа', false],
-                            $task = ['Выполнить тестовое задание', '25.12.2019', 'Работа', false],
-                            $task = ['Сделать задание первого раздела', '21.12.2019', 'Учёба', true],
-                            $task = ['Встреча с другом', '22.12.2019', 'Входящие', false],
+                            $task = ['Собеседование в IT компании', '05.06.2020', 'Работа', false],
+                            $task = ['Выполнить тестовое задание', '06.06.2020', 'Работа', false],
+                            $task = ['Сделать задание первого раздела', '03.06.2020', 'Учёба', true],
+                            $task = ['Встреча с другом', '06.06.2020', 'Входящие', false],
                             $task = ['Купить корм для кота', 'без времени', 'Домашние дела', false],
                             $task = ['Заказать пиццу', 'без времени', 'Домашние дела', false]
                         );
@@ -149,17 +149,25 @@ $show_complete_tasks = rand(0, 1);
                         } 
                         if (count($arrshow)){
                             foreach($arrshow as $task) {
-                                if (!$task[3] && $show_complete_tasks){
+                                $date = $task[1];
+                                $taskImportant = '';
+                                if(strpos($date, '.')){
+                                    $nowDate = getdate();
+                                    $timeOff = strtotime($date) - strtotime($nowDate["mday"].'.'.$nowDate["mon"].'.'.$nowDate["year"]);
+                                    $taskImportant = $timeOff <= 86400 && $timeOff > -86400 ? 'task--important' : '';
+                                    
+                                }
+                                if (true){
                                     $checkedclassname = $task[3] ? 'task--completed' : '';
                                     $checkcheked = $task[3] ? 'checked' : '';
-                                    echo '<tr class="tasks__item task '.$checkedclassname.'">
+                                    echo '<tr class="tasks__item task '.$checkedclassname.' '.$taskImportant.'">
                                     <td class="task__select">
                                         <label class="checkbox task__checkbox">
                                             <input class="checkbox__input visually-hidden" type="checkbox" '.$checkcheked.'>
                                             <span class="checkbox__text">'.$task[0].'</span>
                                         </label>
                                     </td>
-                                    <td class="task__date">'.$task[1].'</td>
+                                    <td class="task__date ">'.$date.'</td>
                                     <td class="task__controls"> </td>
                                 </tr>';
                                 }
@@ -169,6 +177,7 @@ $show_complete_tasks = rand(0, 1);
                         }
                         
                     }  
+
                         ?>
                     </table>
                 </main>
