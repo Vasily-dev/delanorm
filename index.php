@@ -56,11 +56,20 @@ $show_complete_tasks = rand(0, 1);
                         <form method="POST">
                         <ul class="main-navigation__list">
                             <?php
+                            function getCountTasksInProject ($projects, $arrayTasks) {
+                                $count = 0;
+                                foreach($arrayTasks as $task) {
+                                    if($projects == $task[2]) {
+                                        $count++;
+                                    }
+                                }
+                                return $count;
+                            }
                             foreach ($projectname as $tab) {
                             echo '
                                 <li class="main-navigation__list-item">
                                 <input name="clicktab" type="submit" class="main-navigation__list-item-link" value="'. $tab .'">
-                                <span class="main-navigation__list-item-count">0</span>
+                                <span class="main-navigation__list-item-count">'.getCountTasksInProject($tab, $tasksall).'</span>
                                 </li>';
                             };
                             ?>
