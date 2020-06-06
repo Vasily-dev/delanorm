@@ -1,4 +1,9 @@
+<?php
+// показывать или нет выполненные задачи
+$show_complete_tasks = rand(0, 1);
+?>
 <div class="content">
+  <title><?php echo $title ?></title>
                 <section class="content__side">
                     <h2 class="content__side-heading">Проекты</h2>
 

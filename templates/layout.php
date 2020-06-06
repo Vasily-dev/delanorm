@@ -1,13 +1,32 @@
-<?php
-// показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
+<?php 
+    include('helpers.php');
+    $titles = [
+        'main.php' => 'Main page',
+    ];
+
+    function getTitleByPageName (String $pageName) {
+        global $titles;
+        $title = $titles[$pageName];
+        if (!$title) {
+            return 'Дела в порядке';
+        }
+        return $title;
+    };
+
+    function getPage (String $pageName) {
+        $data['content'] = include_template($pageName);
+        $data['title'] = getTitleByPageName($pageName);
+        return $data;
+    };
+
+    $data = getPage('main.php');
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
-    <title>Дела в порядке</title>
+    <title><?php echo $data['title'] ?></title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
@@ -36,7 +55,7 @@ $show_complete_tasks = rand(0, 1);
                 </div>
             </header>
             <?php
-            include_once('/OSPanel/domains/delanorm/templates/main.php');
+                print $data['content'];
             ?>
             
         </div>
